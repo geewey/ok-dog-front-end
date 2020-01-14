@@ -6,7 +6,7 @@ const ContentContainer = ({ news, joke, weather, command }) => {
   let content = [...news, ...joke, ...weather];
 
   const renderHello = () => {
-    content = ["Let's start chatting!"];
+    content = ["None so far. Issue a command!"];
     return content;
   };
 
