@@ -1,11 +1,27 @@
 import React from "react";
 
-const ChatContainer = ({ response }) => {
+const formPosStyle = {
+  position: "fixed",
+  size: "150",
+  bottom: 10,
+  marginBottom: 10,
+  backgroundColor: "white"
+};
+
+const ChatContainer = ({ handleInput, inputValue, handleInputValueChange }) => {
   return (
     <div className="chat-container">
-      <button onClick={() => response("news")}>Get the news</button>
-      <button onClick={() => response("joke")}>Get a joke</button>
-      <button onClick={() => response("weather")}>Get the weather</button>
+      <form
+        onSubmit={event => handleInput(event, inputValue)}
+        style={formPosStyle}
+      >
+        <input
+          type="text"
+          value={inputValue}
+          onChange={handleInputValueChange}
+          placeholder="Type here to chat!"
+        />
+      </form>
     </div>
   );
 };

@@ -6,19 +6,44 @@ import ChatContainer from "../containers/ChatContainer";
 // import NavbarHeader from "react-bootstrap/lib/NavbarHeader";
 import NavbarHeader from "../components/NavbarHeader";
 
+// styling components
+const headingStyle = {
+  position: "fixed",
+  top: 0,
+  backgroundColor: "white",
+  borderBottom: "1px solid"
+};
+const listStyle = {
+  paddingTop: "60px",
+  paddingBottom: "60px"
+};
+
 const App = () => {
-  // initially there is no command
+  // upon initiation, command is empty
   const [command, setCommand] = useState([]);
+  const [conversation, setConversation] = useState([]);
 
   // Store respective fetchContent responses here
   const [news, setNews] = useState([""]);
   const [joke, setJoke] = useState([""]);
   const [weather, setWeather] = useState([""]);
 
+  const [inputValue, setInputValue] = useState("");
+
+  const handleInputValueChange = event => {
+    setInputValue(event.target.value);
+  };
+
   const commandMap = {
     news: setNews,
     joke: setJoke,
     weather: setWeather
+  };
+
+  const conversationSubmit = response => {
+    const conversation = {
+      content: []
+    };
   };
 
   // const content = [...news, ...joke, ...weather];
@@ -42,15 +67,21 @@ const App = () => {
     return array;
   };
 
-  const handleResponse = command => {
-    fetchContent(command);
-    setCommand(command);
+  const handleInput = (event, inputValue) => {
+    event.preventDefault();
+    // debugger;
+    fetchContent(inputValue);
+    setCommand(inputValue);
   };
 
   return (
     <div>
       <NavbarHeader />
-      <ChatContainer response={handleResponse} />
+      <ChatContainer
+        handleInput={handleInput}
+        inputValue={inputValue}
+        handleInputValueChange={handleInputValueChange}
+      />
       <ContentContainer
         news={news}
         joke={joke}
