@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import ContentContainer from "../containers/ContentContainer";
 import ChatContainer from "../containers/ChatContainer";
+// import { Navbar } from "react-bootstrap";
+// import NavbarHeader from "react-bootstrap/lib/NavbarHeader";
+import NavbarHeader from "../components/NavbarHeader";
 
 const App = () => {
+  // initially there is no command
   const [command, setCommand] = useState([]);
-  const [news, setNews] = useState([]);
-  const [joke, setJoke] = useState([]);
-  const [weather, setWeather] = useState([]);
+
+  // Store respective fetchContent responses here
+  const [news, setNews] = useState([""]);
+  const [joke, setJoke] = useState([""]);
+  const [weather, setWeather] = useState([""]);
 
   const commandMap = {
     news: setNews,
@@ -15,7 +21,10 @@ const App = () => {
     weather: setWeather
   };
 
+  // const content = [...news, ...joke, ...weather];
+
   // Helper method to make "GET" request based on command
+  // Sets response to the state
   const fetchContent = command => {
     let url = `http://localhost:3000/${command}`;
     fetch(url)
@@ -33,19 +42,6 @@ const App = () => {
     return array;
   };
 
-  const displayContent = command => {
-    switch (command) {
-      case news:
-        return news;
-      case joke:
-        return joke;
-      case weather:
-        return weather;
-      default:
-        return ["Enter a command!"];
-    }
-  };
-
   const handleResponse = command => {
     fetchContent(command);
     setCommand(command);
@@ -53,8 +49,14 @@ const App = () => {
 
   return (
     <div>
+      <NavbarHeader />
       <ChatContainer response={handleResponse} />
-      <ContentContainer content={displayContent(command)} />
+      <ContentContainer
+        news={news}
+        joke={joke}
+        weather={weather}
+        command={command}
+      />
     </div>
   );
 };
