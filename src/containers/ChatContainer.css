@@ -1,18 +1,9 @@
-/* form {
-  position: fixed;
-  size: 150;
-  bottom: 10;
-  margin-bottom: 10;
-  background-color: white;
-} */
-
 form {
-  padding: 0;
+  padding: 0.2em;
   width: 48%;
   min-width: 270px;
+  border: 1px solid;
   border-radius: 5px;
-  /* FOR TESTING */
-  /* border: 1px solid; */
   display: inline-flex;
 }
 
@@ -24,20 +15,32 @@ input {
 }
 
 button {
-  padding: 0;
+  padding: 0 2px 0 0;
+  margin-left: 2px;
   border-radius: 5px;
   border: 1px solid;
+  background-color: cornflowerblue;
 }
 
-/* .chat-bubble {
+/* .chat-container {
+  overflow-y: scroll !important;
+  height: 100vh;
+} */
+
+.chat-bubbles {
+  margin-bottom: 75px;
+}
+
+.chat-bubble {
   font-size: 20px;
   margin-bottom: 20px;
   width: 100%;
   display: flex;
+  justify-content: flex-end;
 }
 
 .chat-bubble.ai {
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .chat-bubble.ai .chat-content {
@@ -50,49 +53,5 @@ button {
   background-color: #0747a7;
   color: white;
   border-radius: 10px;
-} */
-
-.chat-bubble {
-  padding: 8px 15px;
-  font-size: 20px;
-  margin-bottom: 20px;
-  width: 100%;
-  border-radius: 10px;
-  justify-content: flex-end;
+  max-width: 60%;
 }
-
-.chatbot-input {
-  background-color: #4c9689;
-  color: white;
-  display: flex;
-}
-
-.user-input {
-  background-color: #0747a7;
-  color: white;
-  display: inline-block;
-}
-
-/* .user-input,
-.chatbot-input {
-  font-size: 20px;
-  margin-bottom: 20px;
-  width: 100%;
-  display: flex;
-}
-
-.chat-bubble {
-  justify-content: flex-end;
-}
-
-.chatbot-input .chat-bubble {
-  background-color: #4c9689;
-}
-
-.user-input .chat-bubble {
-  display: inline-block;
-  padding: 8px 15px;
-  background-color: cornflowerblue;
-  color: white;
-  border-radius: 10px;
-} */

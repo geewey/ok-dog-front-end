@@ -1,21 +1,12 @@
 import React from "react";
 import ContentDisplay from "../components/ContentDisplay";
 
-// const ContentContainer = content => {
-const ContentContainer = ({ news, joke, weather, command }) => {
-  let content = [...news, ...joke, ...weather];
-
-  const renderHello = () => {
-    content = ["None so far. Issue a command!"];
-    return content;
-  };
-
+const ContentContainer = ({ content, command }) => {
   return (
-    <ContentDisplay
-      content={command.length ? content : renderHello()}
-      // content={content}
-      command={command}
-    />
+    <React.Fragment>
+      <div>[TESTING] Current command: {command}</div>
+      <ContentDisplay content={content} command={command} />
+    </React.Fragment>
   );
 };
 

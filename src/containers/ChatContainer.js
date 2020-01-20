@@ -17,18 +17,14 @@ const ChatContainer = ({
 }) => {
   return (
     <div className="chat-container">
-      <div>
+      <div className="chat-bubbles">
         {conversation.map((ele, idx) => {
           return (
             <p
               key={idx}
-              className={
-                ele.byUser
-                  ? "user-input chat-bubble"
-                  : "chatbot-input chat-bubble"
-              }
+              className={ele.byUser ? "chat-bubble" : "ai chat-bubble"}
             >
-              {ele.content}
+              <span className="chat-content">{ele.content}</span>
             </p>
           );
         })}
@@ -46,6 +42,7 @@ const ChatContainer = ({
         />
         <button type="submit">
           <img
+            className="send-icon"
             alt="Submit"
             style={{ width: "20px", height: "20px" }}
             src="https://static.thenounproject.com/png/326025-200.png"
