@@ -3,10 +3,9 @@ import "./ChatContainer.css";
 
 const formPosStyle = {
   position: "fixed",
-  size: "150",
   bottom: 10,
   marginBottom: 10,
-  backgroundColor: "white"
+  backgroundColor: "transparent"
 };
 
 const ChatContainer = ({
@@ -18,6 +17,7 @@ const ChatContainer = ({
   return (
     <div className="chat-container">
       <div className="chat-bubbles">
+        {/* after mapping conversation, call a function to force scroll to the bottom */}
         {conversation.map((ele, idx) => {
           return (
             <p
