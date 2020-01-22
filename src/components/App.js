@@ -9,11 +9,18 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const App = () => {
   // store conversation history into state
-  const initialMessage = {
-    content: "Hi! Let's chat!",
-    byUser: false
-  };
-  const [conversation, setConversation] = useState([initialMessage]);
+  const initialMessages = [
+    {
+      content: "Hi! Let's chat!",
+      byUser: false
+    },
+    {
+      content:
+        "You can ask 'news' for the top current BBC headline, or I can tell you a joke!",
+      byUser: false
+    }
+  ];
+  const [conversation, setConversation] = useState(initialMessages);
   // controlled input from ChatContainer.js
   const [inputValue, setInputValue] = useState("");
   // store fetchContent responses from Rails API, based on command
@@ -44,14 +51,28 @@ const App = () => {
   // dynamic: based on Dialogflow
   const fetchContent = userInput => {
     // const url = `http://localhost:3000/${command}`;
-    const url = `http://localhost:3000/dialogflow/${userInput}`;
+    let url = `http://localhost:3000/dialogflow/${userInput}`;
     const headers = {
       "Content-Type": "application/json",
       Accept: "application/json"
     };
-    fetch(url, headers)
-      .then(resp => resp.json())
-      .then(resp => addToConversation(resp.dialogflow_response, false));
+
+    // hacking the Google Dialogflow
+    if (userInput === "joke") {
+      url = `http://localhost:3000/${userInput}`;
+      fetch(url, headers)
+        .then(resp => resp.json())
+        .then(resp => addToConversation(resp.joke, false));
+    } else if (userInput === "news") {
+      url = `http://localhost:3000/${userInput}`;
+      fetch(url, headers)
+        .then(resp => resp.json())
+        .then(resp => addToConversation(resp.description, false));
+    } else {
+      fetch(url, headers)
+        .then(resp => resp.json())
+        .then(resp => addToConversation(resp.dialogflow_response, false));
+    }
     // .then(createArray)
     // .then(resp => setContent(resp));
   };
@@ -68,15 +89,27 @@ const App = () => {
 
   const handleInput = async (event, userInput) => {
     event.preventDefault();
-    // window.scrollTo(0, 9999);
     addToConversation(inputValue);
     await sleep(500);
+
     // evaluate userInput, returns "joke", "weather", or "news"
-    // let lowerCaseValue = userInput.toLowerCase();
-    // let interpretedUserInput = "";
-    // if (lowerCaseValue.includes("joke")) {
-    //   interpretedUserInput = "joke";
-    //   addToConversation("Okay, here's a joke!", false);
+    let lowerCaseValue = userInput.toLowerCase();
+    let interpretedUserInput = "";
+    // reset user input field to empty string ("")
+    setInputValue("");
+    if (lowerCaseValue.includes("joke")) {
+      addToConversation("Okay, here's a joke!", false);
+      fetchContent("joke", false);
+      return;
+    }
+    if (lowerCaseValue.includes("news")) {
+      addToConversation(
+        "Alright, here's the top news headline from BBC.",
+        false
+      );
+      fetchContent("news", false);
+      return;
+    }
     // } else if (lowerCaseValue.includes("news")) {
     //   interpretedUserInput = "news";
     //   addToConversation("Alright, here's the top news headline.", false);
@@ -91,10 +124,6 @@ const App = () => {
     // fetchContent(interpretedUserInput);
     fetchContent(userInput);
     // setCommand(interpretedUserInput);
-
-    // reset user input field to empty string ("")
-    setInputValue("");
-    // scrollIntoView();
   };
 
   return (
