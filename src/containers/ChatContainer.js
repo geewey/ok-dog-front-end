@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "./ChatContainer.css";
 
 const formPosStyle = {
   position: "fixed",
-  size: "150",
   bottom: 10,
   marginBottom: 10,
-  backgroundColor: "white"
+  backgroundColor: "transparent"
 };
 
 const ChatContainer = ({
@@ -15,20 +14,27 @@ const ChatContainer = ({
   inputValue,
   handleInputValueChange
 }) => {
+  const conversationEndRef = useRef(null);
+  const scrollToBottom = () => {
+    conversationEndRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+  useEffect(scrollToBottom, [conversation]);
+
   return (
     <div className="chat-container">
-      <div className="chat-bubbles">
-        {conversation.map((ele, idx) => {
+      <div className="chat-bubbles-container">
+        {conversation.map((message, idx) => {
           return (
             <p
               key={idx}
-              className={ele.byUser ? "chat-bubble" : "ai chat-bubble"}
+              className={message.byUser ? "chat-bubble" : "ai chat-bubble"}
             >
-              <span className="chat-content">{ele.content}</span>
+              <span className="chat-content">{message.content}</span>
             </p>
           );
         })}
       </div>
+      <div ref={conversationEndRef}></div>
       <form
         onSubmit={event => handleInput(event, inputValue)}
         style={formPosStyle}

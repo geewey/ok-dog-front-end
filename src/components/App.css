@@ -1,3 +1,17 @@
-/* .chat-container {
-  overflow-y: auto;
-} */
+.chat-container {
+  padding: 10px;
+  margin-bottom: 10px;
+  /* overflow-y: auto; */
+  /* height: 90vh; */
+  /* border-left: 1px solid;
+  border-right: 1px solid; */
+}
+
+body,
+.chat-container {
+  background-color: rgb(252, 252, 255);
+}
+
+body {
+  height: 90vh;
+}
