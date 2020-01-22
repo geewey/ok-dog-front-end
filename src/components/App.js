@@ -9,11 +9,11 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const App = () => {
   // store conversation history into state
-  const initialConversation = {
+  const initialMessage = {
     content: "Hi! Let's chat!",
     byUser: false
   };
-  const [conversation, setConversation] = useState([initialConversation]);
+  const [conversation, setConversation] = useState([initialMessage]);
   // controlled input from ChatContainer.js
   const [inputValue, setInputValue] = useState("");
   // store fetchContent responses from Rails API, based on command
@@ -68,7 +68,7 @@ const App = () => {
 
   const handleInput = async (event, userInput) => {
     event.preventDefault();
-    window.scrollTo(0, 9999);
+    // window.scrollTo(0, 9999);
     addToConversation(inputValue);
     await sleep(500);
     // evaluate userInput, returns "joke", "weather", or "news"
@@ -94,6 +94,7 @@ const App = () => {
 
     // reset user input field to empty string ("")
     setInputValue("");
+    // scrollIntoView();
   };
 
   return (
