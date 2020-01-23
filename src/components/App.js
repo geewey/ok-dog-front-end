@@ -63,7 +63,8 @@ const App = () => {
   // dynamic: based on Dialogflow
   const fetchContent = userInput => {
     // const url = `http://localhost:3000/${command}`;
-    let url = `http://localhost:3000/dialogflow/${userInput}`;
+    // let url = `http://localhost:3000/dialogflow/${userInput}`;
+    let url = `https://e2e29aca.ngrok.io/dialogflow/${userInput}`;
     const headers = {
       "Content-Type": "application/json",
       Accept: "application/json"
@@ -71,12 +72,14 @@ const App = () => {
 
     // hacking the Google Dialogflow
     if (userInput === "joke") {
-      url = `http://localhost:3000/${userInput}`;
+      // url = `http://localhost:3000/${userInput}`;
+      url = `https://e2e29aca.ngrok.io/${userInput}`;
       fetch(url, headers)
         .then(resp => resp.json())
         .then(resp => addToConversation([resp.joke], false));
     } else if (userInput === "news") {
-      url = `http://localhost:3000/${userInput}`;
+      // url = `http://localhost:3000/${userInput}`;
+      url = `https://e2e29aca.ngrok.io/${userInput}`;
       fetch(url, headers)
         .then(resp => resp.json())
         .then(resp =>
