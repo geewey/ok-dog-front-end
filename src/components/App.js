@@ -9,14 +9,20 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const App = () => {
   // store conversation history into state
+  const dogEmoji = () => {
+    let array = ["🐕", "🐶", "🐩", "🦴"];
+    return array[Math.floor(Math.random() * 4)];
+  };
+
   const initialMessages = [
     {
-      content: "Hi! I am Ok Dog, here to help fetch your tasks.",
+      content: "Hi! I am Ok Dog, here to help fetch your tasks. " + dogEmoji(),
       byUser: false
     },
     {
       content:
-        "You can ask me for the current weather in a city or the top BBC headline at the moment. I can also tell you a joke!",
+        "You can ask me for the current weather in a city, the top BBC headline at the moment, or I can also tell you a joke! " +
+        dogEmoji(),
       byUser: false
     }
   ];
@@ -33,10 +39,6 @@ const App = () => {
       : setInputValue(event.target.value);
   };
 
-  const dogEmoji = () => {
-    let array = ["🐕", "🐶", "🐩", "🦴"];
-    return array[Math.floor(Math.random() * 4)];
-  };
   // const addToConversation = (value, isByUser = true) => {
   //   const appendToConversation = {
   //     content: value,
@@ -89,17 +91,17 @@ const App = () => {
 
   // Flattens the JSON object response into an array
   // ContentContainer.js passes array to ContentDisplay.js
-  const createArray = object => {
-    let array = [];
-    for (const key in object) {
-      array.push(object[key]);
-    }
-    return array;
-  };
+  // const createArray = object => {
+  //   let array = [];
+  //   for (const key in object) {
+  //     array.push(object[key]);
+  //   }
+  //   return array;
+  // };
 
   const handleInput = async (event, userInput) => {
     event.preventDefault();
-    if (event.target.value === undefined) {
+    if (userInput.length === 0) {
       alert("Message length cannot be empty. " + dogEmoji());
       return;
     }
@@ -122,6 +124,16 @@ const App = () => {
         false
       );
       fetchContent("news", false);
+      return;
+    }
+    if (lowerCaseValue.includes("help")) {
+      addToConversation(
+        [
+          "Try asking me one of the following: joke, news, or weather! " +
+            dogEmoji()
+        ],
+        false
+      );
       return;
     }
     fetchContent(userInput);
