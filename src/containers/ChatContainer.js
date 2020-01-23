@@ -20,6 +20,17 @@ const ChatContainer = ({
   };
   useEffect(scrollToBottom, [conversation]);
 
+  const checkIfURL = message => {
+    if (
+      message.content.startsWith("http") ||
+      message.content.startsWith("www")
+    ) {
+      return <a href="message.content">See more information here...</a>;
+    } else {
+      return message.content;
+    }
+  };
+
   return (
     <div className="chat-container">
       <div className="chat-bubbles-container">
@@ -29,11 +40,17 @@ const ChatContainer = ({
               key={idx}
               className={message.byUser ? "chat-bubble" : "ai chat-bubble"}
             >
-              <span className="chat-content">{message.content}</span>
+              {/* <span className="chat-content">{message.content}</span> */}
+              <span className="chat-content">{checkIfURL(message)}</span>
             </p>
           );
         })}
       </div>
+      {/* <img
+        className="chatbot-avatar"
+        src="http://i.imgur.com/6jr3M0j.png"
+        alt="chatbot-avatar"
+      /> */}
       <div ref={conversationEndRef}></div>
       <form
         onSubmit={event => handleInput(event, inputValue)}
