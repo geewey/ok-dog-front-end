@@ -25,7 +25,11 @@ const ChatContainer = ({
       message.content &&
       (message.content.startsWith("http") || message.content.startsWith("www"))
     ) {
-      return <a href="message.content">See more information here...</a>;
+      return (
+        <a href={message.content} target="_blank" rel="noopener noreferrer">
+          See more information here...
+        </a>
+      );
     } else {
       return message.content;
     }
