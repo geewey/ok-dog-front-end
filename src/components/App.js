@@ -21,7 +21,7 @@ const App = () => {
     },
     {
       content:
-        "You can ask me for the current weather in a city, the top BBC headline at the moment, or I can also tell you a joke! " +
+        "You can ask me for the current weather in a city, top news headlines, or I can also tell you a joke! " +
         dogEmoji(),
       byUser: false
     }
