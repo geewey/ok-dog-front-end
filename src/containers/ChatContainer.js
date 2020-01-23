@@ -22,8 +22,8 @@ const ChatContainer = ({
 
   const checkIfURL = message => {
     if (
-      message.content.startsWith("http") ||
-      message.content.startsWith("www")
+      message.content &&
+      (message.content.startsWith("http") || message.content.startsWith("www"))
     ) {
       return <a href="message.content">See more information here...</a>;
     } else {

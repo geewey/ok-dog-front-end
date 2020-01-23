@@ -27,7 +27,9 @@ const App = () => {
   const handleInputValueChange = event => {
     // restricts input length to 240 characters or less
     event.target.value.length > 240
-      ? alert("Message length cannot be greater than 240 characters.")
+      ? alert(
+          "Message length cannot be greater than 240 characters. " + dogEmoji()
+        )
       : setInputValue(event.target.value);
   };
 
@@ -97,6 +99,11 @@ const App = () => {
 
   const handleInput = async (event, userInput) => {
     event.preventDefault();
+    if (event.target.value === undefined) {
+      alert("Message length cannot be empty. " + dogEmoji());
+      return;
+    }
+
     addToConversation([inputValue]);
     // reset user input field to empty string ("")
     setInputValue("");
