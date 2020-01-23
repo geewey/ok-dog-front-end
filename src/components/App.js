@@ -47,13 +47,29 @@ const App = () => {
   //   setConversation(conversation => [...conversation, appendToConversation]);
   // };
   const addToConversation = (messageArray, isByUser = true) => {
-    messageArray.forEach(message => {
+    const setMessage = async message => {
       let appendToConversation = {
         content: message,
         byUser: isByUser
       };
+      await sleep(100);
       setConversation(conversation => [...conversation, appendToConversation]);
-    });
+    };
+
+    messageArray.forEach(message => setMessage(message));
+
+    // messageArray.forEach(message => {
+    //   await sleep(100);
+    //   let appendToConversation = {
+    //     content: message,
+    //     byUser: isByUser
+    //   };
+    //   setConversation(conversation => [...conversation, appendToConversation]);
+    // });
+  };
+
+  const displayNews = news => {
+    return `TITLE: ${news.title}. DESCRIPTION: ${news.description}`;
   };
 
   // helper method: (1) make "GET" request, (2) set state
@@ -83,7 +99,8 @@ const App = () => {
       fetch(url, headers)
         .then(resp => resp.json())
         .then(resp =>
-          addToConversation([resp.title, resp.description, resp.url], false)
+          // addToConversation([resp.title, resp.description, resp.url], false)
+          addToConversation([displayNews(resp), resp.url], false)
         );
     } else {
       fetch(url, headers)
@@ -123,7 +140,7 @@ const App = () => {
     }
     if (lowerCaseValue.includes("news")) {
       addToConversation(
-        ["Alright, here is the top news headline from BBC!" + dogEmoji()],
+        ["Alright, here is a top news headline from BBC! " + dogEmoji()],
         false
       );
       fetchContent("news", false);
