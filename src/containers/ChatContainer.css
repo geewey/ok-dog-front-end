@@ -57,7 +57,7 @@ button {
   color: white;
   border-radius: 13px 13px 0px 13px;
   max-width: 60%;
-  font-weight: 550;
+  font-weight: 500;
 }
 
 .chat-bubble.ai .chat-content {
