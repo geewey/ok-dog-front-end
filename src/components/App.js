@@ -108,7 +108,7 @@ const App = () => {
     } else {
       fetch(url, headers)
         .then(resp => resp.json())
-        .then(resp => addToConversation([resp.fulfillmentText], falgit se));
+        .then(resp => addToConversation([resp.fulfillmentText], false));
     }
   };
 
