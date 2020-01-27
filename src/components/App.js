@@ -82,7 +82,7 @@ const App = () => {
     // const url = `http://localhost:3000/${command}`;
     // let url = `http://localhost:3000/dialogflow/${userInput}`;
     // let url = `https://e2e29aca.ngrok.io/dialogflow/${userInput}`;
-    let url = `${urlEndpoint}/${userInput}`;
+    let url = `${urlEndpoint}/dialogflow/${userInput}`;
     const headers = {
       "Content-Type": "application/json",
       Accept: "application/json"
