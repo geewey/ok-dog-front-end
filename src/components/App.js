@@ -6,6 +6,7 @@ import "./App.css";
 import { Container, Grid, Menu, Image } from "semantic-ui-react";
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const urlEndpoint = "https://ok-dog-back-end.herokuapp.com/";
 
 const App = () => {
   // store conversation history into state
@@ -80,7 +81,8 @@ const App = () => {
   const fetchContent = userInput => {
     // const url = `http://localhost:3000/${command}`;
     // let url = `http://localhost:3000/dialogflow/${userInput}`;
-    let url = `https://e2e29aca.ngrok.io/dialogflow/${userInput}`;
+    // let url = `https://e2e29aca.ngrok.io/dialogflow/${userInput}`;
+    let url = `${urlEndpoint} + ${userInput}`;
     const headers = {
       "Content-Type": "application/json",
       Accept: "application/json"
@@ -89,13 +91,14 @@ const App = () => {
     // hacking the Google Dialogflow
     if (userInput === "joke") {
       // url = `http://localhost:3000/${userInput}`;
-      url = `https://e2e29aca.ngrok.io/${userInput}`;
+      // url = `https://e2e29aca.ngrok.io/${userInput}`;
+      url = `${urlEndpoint} + ${userInput}`;
       fetch(url, headers)
         .then(resp => resp.json())
         .then(resp => addToConversation([resp.joke], false));
     } else if (userInput === "news") {
       // url = `http://localhost:3000/${userInput}`;
-      url = `https://e2e29aca.ngrok.io/${userInput}`;
+      url = `${urlEndpoint} + ${userInput}`;
       fetch(url, headers)
         .then(resp => resp.json())
         .then(resp =>
@@ -105,7 +108,7 @@ const App = () => {
     } else {
       fetch(url, headers)
         .then(resp => resp.json())
-        .then(resp => addToConversation([resp.fulfillmentText], false));
+        .then(resp => addToConversation([resp.fulfillmentText], falgit se));
     }
   };
 
