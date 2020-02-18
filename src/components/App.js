@@ -40,13 +40,6 @@ const App = () => {
       : setInputValue(event.target.value);
   };
 
-  // const addToConversation = (value, isByUser = true) => {
-  //   const appendToConversation = {
-  //     content: value,
-  //     byUser: isByUser
-  //   };
-  //   setConversation(conversation => [...conversation, appendToConversation]);
-  // };
   const addToConversation = (messageArray, isByUser = true) => {
     const setMessage = async message => {
       let appendToConversation = {
@@ -58,15 +51,6 @@ const App = () => {
     };
 
     messageArray.forEach(message => setMessage(message));
-
-    // messageArray.forEach(message => {
-    //   await sleep(100);
-    //   let appendToConversation = {
-    //     content: message,
-    //     byUser: isByUser
-    //   };
-    //   setConversation(conversation => [...conversation, appendToConversation]);
-    // });
   };
 
   const displayNews = news => {
@@ -79,7 +63,7 @@ const App = () => {
 
   // dynamic: based on Dialogflow
   const fetchContent = userInput => {
-    // const url = `http://localhost:3000/${command}`;
+    // for testing:
     // let url = `http://localhost:3000/dialogflow/${userInput}`;
     // let url = `https://e2e29aca.ngrok.io/dialogflow/${userInput}`;
     let url = `${urlEndpoint}/dialogflow/${userInput}`;
@@ -88,23 +72,17 @@ const App = () => {
       Accept: "application/json"
     };
 
-    // hacking the Google Dialogflow
+    // combining external API calls with Google Dialogflow
     if (userInput === "joke") {
-      // url = `http://localhost:3000/${userInput}`;
-      // url = `https://e2e29aca.ngrok.io/${userInput}`;
       url = `${urlEndpoint}/${userInput}`;
       fetch(url, headers)
         .then(resp => resp.json())
         .then(resp => addToConversation([resp.joke], false));
     } else if (userInput === "news") {
-      // url = `http://localhost:3000/${userInput}`;
       url = `${urlEndpoint}/${userInput}`;
       fetch(url, headers)
         .then(resp => resp.json())
-        .then(resp =>
-          // addToConversation([resp.title, resp.description, resp.url], false)
-          addToConversation([displayNews(resp), resp.url], false)
-        );
+        .then(resp => addToConversation([displayNews(resp), resp.url], false));
     } else {
       fetch(url, headers)
         .then(resp => resp.json())
