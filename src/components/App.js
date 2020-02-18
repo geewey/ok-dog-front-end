@@ -1,18 +1,16 @@
 import React, { useState } from "react";
-// import ContentContainer from "../containers/ContentContainer";
-import ChatContainer from "../containers/ChatContainer";
 import "./App.css";
+import ChatContainer from "../containers/ChatContainer";
 // import NavBar from "../components/NavBar";
-import { Container, Grid, Menu, Image } from "semantic-ui-react";
+import { Container, Menu } from "semantic-ui-react";
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const urlEndpoint = "https://ok-dog-back-end.herokuapp.com";
 
 const App = () => {
-  // store conversation history into state
   const dogEmoji = () => {
-    let array = ["🐕", "🐶", "🐩", "🦴"];
-    return array[Math.floor(Math.random() * 4)];
+    let array = ["🐕", "🐶", "🐩"];
+    return array[Math.floor(Math.random() * 3)];
   };
 
   const initialMessages = [
@@ -27,10 +25,12 @@ const App = () => {
       byUser: false
     }
   ];
+
+  // store conversation history into state
   const [conversation, setConversation] = useState(initialMessages);
   // controlled input from ChatContainer.js
   const [inputValue, setInputValue] = useState("");
-  // controlled input from ChatContainer.js
+
   const handleInputValueChange = event => {
     // restricts input length to 240 characters or less
     event.target.value.length > 240
@@ -112,16 +112,6 @@ const App = () => {
     }
   };
 
-  // Flattens the JSON object response into an array
-  // ContentContainer.js passes array to ContentDisplay.js
-  // const createArray = object => {
-  //   let array = [];
-  //   for (const key in object) {
-  //     array.push(object[key]);
-  //   }
-  //   return array;
-  // };
-
   const handleInput = async (event, userInput) => {
     event.preventDefault();
     if (userInput.length === 0) {
@@ -169,7 +159,7 @@ const App = () => {
           {/* <Image src={logo} alt="okdoge" style={{ marginRight: "1.5em" }} /> */}
           {/* <img src={logo} alt="okdoge" /> */}
           <span role="img" aria-labelledby="ok-doge">
-            🦴
+            🐕
           </span>
           Ok Dog - Your Virtual Assistant!
         </Menu.Item>
