@@ -44,7 +44,6 @@ const ChatContainer = ({
               key={idx}
               className={message.byUser ? "chat-bubble" : "ai chat-bubble"}
             >
-              {/* <span className="chat-content">{message.content}</span> */}
               <span className="chat-content">{checkIfURL(message)}</span>
             </p>
           );
