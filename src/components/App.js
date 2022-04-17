@@ -35,7 +35,7 @@ const App = () => {
     // restricts input length to 240 characters or less
     event.target.value.length > 240
       ? alert(
-          "Message length cannot be greater than 240 characters. " + dogEmoji()
+          "Woof! Message length cannot exceed 240 characters. " + dogEmoji()
         )
       : setInputValue(event.target.value);
   };
@@ -53,6 +53,7 @@ const App = () => {
     messageArray.forEach(message => setMessage(message));
   };
 
+  // helper method: news object
   const displayNews = news => {
     return `TITLE: ${news.title}. DESCRIPTION: ${news.description}`;
   };
@@ -61,29 +62,32 @@ const App = () => {
   // // dynamic: based on "command"
   // // const fetchContent = command => {
 
-  // dynamic: based on Dialogflow
+  // dynamic: based on Dialogflow or API
   const fetchContent = userInput => {
     // for testing:
     // let url = `http://localhost:3000/dialogflow/${userInput}`;
     // let url = `https://e2e29aca.ngrok.io/dialogflow/${userInput}`;
-    let url = `${urlEndpoint}/dialogflow/${userInput}`;
+    
+    // default URL is to hit endpoint that makes external API calls
+    let url = `${urlEndpoint}/${userInput}`;
     const headers = {
       "Content-Type": "application/json",
       Accept: "application/json"
     };
 
-    // combining external API calls with Google Dialogflow
+    // joke
     if (userInput === "joke") {
-      url = `${urlEndpoint}/${userInput}`;
       fetch(url, headers)
         .then(resp => resp.json())
         .then(resp => addToConversation([resp.joke], false));
+    // news
     } else if (userInput === "news") {
-      url = `${urlEndpoint}/${userInput}`;
       fetch(url, headers)
         .then(resp => resp.json())
         .then(resp => addToConversation([displayNews(resp), resp.url], false));
+    // dialogflow
     } else {
+      url = `${urlEndpoint}/dialogflow/${userInput}`;
       fetch(url, headers)
         .then(resp => resp.json())
         .then(resp => addToConversation([resp.fulfillmentText], false));
