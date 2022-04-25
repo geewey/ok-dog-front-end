@@ -7,25 +7,27 @@ import { Container, Menu } from "semantic-ui-react";
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const urlEndpoint = "https://ok-dog-back-end.herokuapp.com";
 
+
+const dogEmoji = () => {
+  let array = ["🐕", "🐶", "🐩"];
+  return array[Math.floor(Math.random() * 3)];
+};
+
+const initialMessages = [
+  {
+    content: "Hi! I am Ok Dog, here to help fetch your tasks. " + dogEmoji(),
+    byUser: false
+  },
+  {
+    content:
+      "You can ask me for the current weather in a city, top news headlines, or I can also tell you a joke! " +
+      dogEmoji(),
+    byUser: false
+  }
+];
+
+
 const App = () => {
-  const dogEmoji = () => {
-    let array = ["🐕", "🐶", "🐩"];
-    return array[Math.floor(Math.random() * 3)];
-  };
-
-  const initialMessages = [
-    {
-      content: "Hi! I am Ok Dog, here to help fetch your tasks. " + dogEmoji(),
-      byUser: false
-    },
-    {
-      content:
-        "You can ask me for the current weather in a city, top news headlines, or I can also tell you a joke! " +
-        dogEmoji(),
-      byUser: false
-    }
-  ];
-
   // store conversation history into state
   const [conversation, setConversation] = useState(initialMessages);
   // controlled input from ChatContainer.js
@@ -40,12 +42,22 @@ const App = () => {
       : setInputValue(event.target.value);
   };
 
+  
+  /**
+   * Takes an array of messages, sets it 
+   * 
+   * @param {array} messageArray 
+   * @param {boolean} isByUser 
+   */
   const addToConversation = (messageArray, isByUser = true) => {
     const setMessage = async message => {
       let appendToConversation = {
         content: message,
         byUser: isByUser
       };
+      // if (conversation[conversation.length() - 1].byUser) {
+      //   await sleep(100);  
+      // }
       await sleep(100);
       setConversation(conversation => [...conversation, appendToConversation]);
     };
